@@ -57,6 +57,7 @@ const limiter = rateLimit({
 
 // API Routes
 const apiRoutes = require('./routes/apiRoutes');
+app.options('*', cors()); // Enable pre-flight for all routes
 app.use('/api', apiRoutes);
 
 // Test Route

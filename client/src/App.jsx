@@ -60,10 +60,11 @@ export default function App() {
               <Route path="/about" element={<About />} />
               <Route path="/experience" element={<Experience />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/projects/:id" element={<ProjectDetail />} />
               <Route path="/blogs/:id" element={<BlogDetail />} />
             </Route>
+
+            {/* Auth - No Navbar/Footer */}
+            <Route path="/login" element={<Login />} />
 
             {/* Admin */}
             <Route path="/admin" element={
