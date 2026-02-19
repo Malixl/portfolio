@@ -51,7 +51,8 @@ const limiter = rateLimit({
 // API Routes
 const apiRoutes = require('./routes/apiRoutes');
 app.options('*', cors()); // Enable pre-flight for all routes
-app.use('/api', apiRoutes);
+// Handle routes on both /api (local) and / (Vercel potentially stripping prefix)
+app.use(['/api', '/'], apiRoutes);
 
 // Test Route
 app.get('/', (req, res) => {
