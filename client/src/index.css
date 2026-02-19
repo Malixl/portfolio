@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #8b5cf6;
+    --color-primary-dark: #4c1d95;
+    --color-accent: #a855f7;
+    --color-muted: #1e1e2e;
+    --color-muted-foreground: #a1a1aa;
+  }
+
+  body {
+    background-color: black;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  /* ── Global Scrollbar ── */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+@layer components {
+  /* ── Form Input ── */
+  .input-field {
+    @apply w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-sm text-gray-900 dark:text-white outline-none transition-all;
+  }
+  .input-field::placeholder {
+    @apply text-gray-400 dark:text-white/20;
+  }
+  .input-field:focus {
+    @apply border-purple-500/50 dark:border-purple-500/50 ring-2 ring-purple-500/20;
+  }
+
+  /* ── Admin Label ── */
+  .admin-label {
+    @apply block text-xs font-medium text-gray-500 dark:text-white/30 uppercase tracking-wider mb-2;
+  }
+
+  /* ── Table Cells ── */
+  .th-cell {
+    @apply px-4 py-3 text-xs font-medium text-gray-500 dark:text-white/30 uppercase tracking-wider;
+  }
+  .td-cell {
+    @apply px-4 py-3 align-middle text-gray-700 dark:text-white/80;
+  }
+
+  /* ── Gradient Text ── */
+  .gradient-text {
+    @apply bg-gradient-to-r from-purple-600 via-violet-600 to-pink-600 dark:from-purple-500 dark:via-violet-500 dark:to-pink-500 bg-clip-text text-transparent;
+  }
+
+  /* ── Glass Effect ── */
+  .glass {
+    @apply backdrop-blur-md bg-white/70 dark:bg-white/5 border border-white/20 dark:border-white/10;
+  }
+
+  /* ── Keyboard Keys ── */
+  .kbd {
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-md text-xs font-semibold font-mono;
+    @apply text-gray-500 bg-gray-100 border border-gray-200 dark:text-white/70 dark:bg-white/10 dark:border-white/15;
+  }
+  .kbd-space {
+    @apply inline-flex items-center justify-center h-8 px-4 rounded-md text-xs font-semibold font-mono tracking-widest;
+    @apply text-gray-500 bg-gray-100 border border-gray-200 dark:text-white/70 dark:bg-white/10 dark:border-white/15;
+  }
+
+  /* ── No Scrollbar Utility ── */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
