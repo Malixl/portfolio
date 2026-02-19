@@ -89,7 +89,7 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="text-gray-400 dark:text-white/20 text-xs text-center mt-6">Default: admin / password123</p>
+       
       </div>
     </div>
   )
