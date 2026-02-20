@@ -19,7 +19,7 @@ const app = express();
 // 1. Enable CORS first to handle preflight requests
 // Vercel debugging: Allow ALL origins temporarily to rule out CORS issues
 app.use(cors({
-    origin: '*',
+    origin: 'https://lixportfolio.vercel.app', // Ubah dari '*' menjadi true (agar otomatis mendeteksi domain frontend)
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
