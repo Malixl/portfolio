@@ -1,18 +1,20 @@
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 
-export default function SEO({ 
-  title, 
-  description, 
-  keywords, 
-  image, 
+export default function SEO({
+  title,
+  description,
+  keywords,
+  image,
   url,
-  type = 'website' 
+  type = "website",
 }) {
-  const siteTitle = 'Lix Portfolio';
-  const siteDescription = 'Portfolio of Malik, a passionate Full Stack Developer specializing in MERN stack, React Native, and modern web technologies.';
-  const siteKeywords = 'Front End Developer, Malik, Abdul Malik Matoha, Malik Matoha, Lix Portfolio, Portfolio Abdul Malik Matoha, Portfolio Malik, Portfolio Lix, MERN Stack, React, Node.js, Web Developer, Motion Graphic, Video Editor, UI/UX Designer, Graphic Designer, Logo Designer';
-  const siteUrl = 'https://lix-portfolio.vercel.app'; // Update with actual URL if known
-  const siteImage = '/Frame 24d.png'; // Update with actual default image
+  const siteTitle = "Lix Portfolio";
+  const siteDescription =
+    "Portfolio of Malik, a passionate Full Stack Developer specializing in MERN stack, React Native, and modern web technologies.";
+  const siteKeywords =
+    "Front End Developer, Malik, Abdul Malik Matoha, Malik Matoha, Lix Portfolio, Portfolio Abdul Malik Matoha, Portfolio Malik, Portfolio Lix, MERN Stack, React, Node.js, Web Developer, Motion Graphic, Video Editor, UI/UX Designer, Graphic Designer, Logo Designer";
+  const siteUrl = "https://lixportfolio.vercel.app/"; // Update with actual URL if known
+  const siteImage = "/Frame 24d.png"; // Update with actual default image
 
   const ogTitle = title ? `${title} | ${siteTitle}` : siteTitle;
   const finalDescription = description || siteDescription;
