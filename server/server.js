@@ -11,15 +11,11 @@ const rateLimit = require('express-rate-limit');
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB
-connectDB();
-
 const app = express();
 
 // 1. Enable CORS first to handle preflight requests
-// Vercel debugging: Allow ALL origins temporarily to rule out CORS issues
 app.use(cors({
-    origin: 'https://lixportfolio.vercel.app', // Ubah dari '*' menjadi true (agar otomatis mendeteksi domain frontend)
+    origin: true, // Dynamically reflect the request origin, compatible with credentials: true
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -47,6 +43,17 @@ const limiter = rateLimit({
     message: 'Too many requests from this IP, please try again later.'
 });
 // app.use('/api', limiter);
+
+// Ensure DB is connected before any API route is hit (serverless-safe)
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error('❌ Database connection failed:', error.message);
+        res.status(500).json({ error: 'Database connection failed' });
+    }
+});
 
 // API Routes
 const apiRoutes = require('./routes/apiRoutes');
