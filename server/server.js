@@ -59,6 +59,18 @@ app.get('/', (req, res) => {
     res.json({ message: 'API is running...' });
 });
 
+// Debug Route for Vercel
+app.all('/debug', (req, res) => {
+    res.json({
+        message: 'Debug Info',
+        method: req.method,
+        url: req.url,
+        originalUrl: req.originalUrl,
+        headers: req.headers,
+        env: process.env.NODE_ENV
+    });
+});
+
 // Start Server
 const PORT = process.env.PORT || 5000;
 
