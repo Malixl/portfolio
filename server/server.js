@@ -61,12 +61,12 @@ app.get('/', (req, res) => {
 
 // Debug Route for Vercel
 app.all('/debug', (req, res) => {
+    const mongoose = require('mongoose');
     res.json({
         message: 'Debug Info',
         method: req.method,
         url: req.url,
-        originalUrl: req.originalUrl,
-        headers: req.headers,
+        dbState: mongoose.connection.readyState, // 0: disconnected, 1: connected, 2: connecting, 3: disconnecting
         env: process.env.NODE_ENV
     });
 });
