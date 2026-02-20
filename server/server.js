@@ -2,10 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const path = require('path');
 const helmet = require('helmet');
-const xss = require('xss-clean');
-const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 
 // Load environment variables
@@ -13,38 +10,36 @@ dotenv.config();
 
 const app = express();
 
-// 1. Enable CORS first to handle preflight requests
-app.use(cors({
-    origin: true, // Dynamically reflect the request origin, compatible with credentials: true
+// ===================== CORS =====================
+// Must be the FIRST middleware so headers are set even on error responses
+const corsOptions = {
+    origin: true, // Reflects request origin (compatible with credentials: true)
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions));
 
-// 2. Set Security Headers
+// ===================== Security Headers =====================
 app.use(helmet({
     crossOriginResourcePolicy: false,
+    crossOriginOpenerPolicy: false,
 }));
 
-// 3. Body Parser (Must be before sanitization)
+// ===================== Body Parser =====================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 4. Data Sanitization against NoSQL query injection
-// app.use(mongoSanitize());
-
-// 5. Data Sanitization against XSS
-// app.use(xss());
-
-// 6. Rate Limiting
+// ===================== Rate Limiting =====================
 const limiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 minutes
-    max: 100, // Limit each IP to 100 requests per windowMs
-    message: 'Too many requests from this IP, please try again later.'
+    windowMs: 10 * 60 * 1000,
+    max: 100,
+    message: 'Too many requests from this IP, please try again later.',
 });
 // app.use('/api', limiter);
 
-// Ensure DB is connected before any API route is hit (serverless-safe)
+// ===================== Database Middleware (Serverless) =====================
+// Await DB connection BEFORE any route handler runs
 app.use(async (req, res, next) => {
     try {
         await connectDB();
@@ -55,38 +50,34 @@ app.use(async (req, res, next) => {
     }
 });
 
-// API Routes
+// ===================== API Routes =====================
 const apiRoutes = require('./routes/apiRoutes');
-app.options('*', cors()); // Enable pre-flight for all routes
-// Handle routes on both /api (local) and / (Vercel potentially stripping prefix)
-app.use(['/api', '/'], apiRoutes);
+app.use('/api', apiRoutes);
 
-// Test Route
+// Health check / test route
 app.get('/', (req, res) => {
     res.json({ message: 'API is running...' });
 });
 
-// Debug Route for Vercel
-app.all('/debug', (req, res) => {
+// Debug route
+app.get('/debug', (req, res) => {
     const mongoose = require('mongoose');
     res.json({
         message: 'Debug Info',
         method: req.method,
         url: req.url,
-        dbState: mongoose.connection.readyState, // 0: disconnected, 1: connected, 2: connecting, 3: disconnecting
-        env: process.env.NODE_ENV
+        dbState: mongoose.connection.readyState,
+        env: process.env.NODE_ENV,
     });
 });
 
-// Start Server
+// ===================== Start Server =====================
 const PORT = process.env.PORT || 5000;
 
-// Only listen if not running on Vercel
 if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => {
         console.log(`🚀 Server running on port ${PORT}`);
     });
 }
 
-// Export app for Vercel
 module.exports = app;
