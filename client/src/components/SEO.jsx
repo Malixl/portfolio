@@ -24,7 +24,8 @@ export default function SEO({
 
   return (
     <Helmet>
-      {/* Standard Metadata — NO <title> tag, keep browser tab as "Lix Portfolio" from index.html */}
+      <title>{ogTitle}</title>
+      <meta name="google-site-verification" content="g5Jv_2mZ7KIx_ey1d-4UlFanmfA_PsO_6TzgQYrGWKE" />
       <meta name="description" content={finalDescription} />
       <meta name="keywords" content={finalKeywords} />
       <link rel="canonical" href={finalUrl} />

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api
 
-Sitemap: https://lixportfolio.vercel.app/
+Sitemap: https://lixportfolio.vercel.app/sitemap.xml

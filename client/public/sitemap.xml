@@ -6,12 +6,17 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://lixportfolio.vercel.app/projects</loc>
+    <loc>https://lixportfolio.vercel.app/experience</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lixportfolio.vercel.app/blog</loc>
+    <loc>https://lixportfolio.vercel.app/about</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lixportfolio.vercel.app/contact</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
