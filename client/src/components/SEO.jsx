@@ -25,7 +25,6 @@ export default function SEO({
   return (
     <Helmet>
       <title>{ogTitle}</title>
-      <meta name="google-site-verification" content="g5Jv_2mZ7KIx_ey1d-4UlFanmfA_PsO_6TzgQYrGWKE" />
       <meta name="description" content={finalDescription} />
       <meta name="keywords" content={finalKeywords} />
       <link rel="canonical" href={finalUrl} />
