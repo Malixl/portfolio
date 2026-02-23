@@ -61,7 +61,7 @@ export default function Hero({ profile }) {
   );
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-svh flex items-center justify-center overflow-hidden">
       {/* Gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-purple-50 via-white to-white dark:bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] dark:from-purple-900/20 dark:via-black dark:to-black" />
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-purple-200/50 dark:bg-purple-600/10 rounded-full blur-3xl" />

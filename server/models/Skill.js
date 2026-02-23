@@ -29,6 +29,11 @@ const SkillSchema = new mongoose.Schema(
         year: {
             type: Number,
         },
+        visibility: {
+            type: String,
+            enum: ['public', 'private'],
+            default: 'public',
+        },
     },
     { timestamps: true }
 );

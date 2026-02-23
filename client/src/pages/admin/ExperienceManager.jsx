@@ -27,12 +27,13 @@ function ExperienceForm({ onSubmit, onCancel, initial = null }) {
   return (
     <motion.div className="fixed inset-0 z-100 flex items-center justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onCancel} />
-      <motion.div className="relative w-[90vw] max-w-md bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl dark:shadow-none max-h-[90vh] overflow-y-auto" initial={{ y: 30, scale: 0.95 }} animate={{ y: 0, scale: 1 }} exit={{ y: 20, scale: 0.97 }}>
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-white/10 sticky top-0 bg-white dark:bg-[#0d0d0d] z-10">
+      <motion.div className="relative w-[90vw] max-w-md bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl dark:shadow-none max-h-[90vh] flex flex-col overflow-hidden" initial={{ y: 30, scale: 0.95 }} animate={{ y: 0, scale: 1 }} exit={{ y: 20, scale: 0.97 }}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-white/10 shrink-0">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">{isEdit ? 'Edit Experience' : 'New Experience'}</h2>
           <button onClick={onCancel} className="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 flex items-center justify-center"><X size={16} className="text-gray-500 dark:text-white/50" /></button>
         </div>
-        <form onSubmit={handleSubmit(onForm)} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit(onForm)} className="flex flex-col flex-1 overflow-hidden">
+          <div className="p-6 space-y-4 overflow-y-auto flex-1 no-scrollbar">
           <div>
             <label className="admin-label">Role *</label>
             <input {...register('role', { required: 'Required' })} className="input-field" placeholder="Frontend Developer" />
@@ -56,7 +57,8 @@ function ExperienceForm({ onSubmit, onCancel, initial = null }) {
             <label className="admin-label">Description</label>
             <textarea {...register('description')} className="input-field min-h-[80px] resize-none" placeholder="What did you do?" rows={3} />
           </div>
-          <div className="flex justify-end gap-3 pt-2">
+          </div>
+          <div className="flex justify-end gap-3 p-6 border-t border-gray-100 dark:border-white/10 shrink-0">
             <button type="button" onClick={onCancel} className="px-4 py-2.5 rounded-lg text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-white/50 dark:hover:text-white/80 dark:hover:bg-white/5 transition-all">Cancel</button>
             <button type="submit" disabled={submitting} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-500 disabled:bg-purple-600/50 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors">
               {submitting ? <><Loader2 size={14} className="animate-spin" /> Saving...</> : isEdit ? 'Save Changes' : 'Add Experience'}
@@ -93,13 +95,13 @@ export default function ExperienceManager() {
 
   return (
     <div className="p-4 md:p-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Experience</h1>
           <p className="text-gray-500 dark:text-white/40 text-sm mt-1">{items.length} entr{items.length !== 1 ? 'ies' : 'y'}</p>
         </div>
-        <button onClick={openCreate} className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-colors w-full md:w-auto">
-          <Plus size={16} /> Add Experience
+        <button onClick={openCreate} className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-purple-500/10 w-full sm:w-auto">
+          <Plus size={18} /> Add Experience
         </button>
       </div>
 

@@ -4,7 +4,6 @@ import { ArrowUpRight, Eye, ChevronDown, ChevronUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Section, SectionTitle } from './Section'
 import { fadeUp, staggerContainer } from '../../utils/animations'
-import { getOptimizedImageUrl } from '../../utils/imageUtils'
 import SearchBar from '../ui/SearchBar'
 
 const INITIAL_COUNT = 4
@@ -43,7 +42,7 @@ export default function Blog({ data }) {
         totalCount={data.length}
       />
 
-      <motion.div variants={staggerContainer} className="grid md:grid-cols-2 gap-6">
+      <motion.div variants={staggerContainer} className="space-y-4">
         <AnimatePresence mode="popLayout">
           {visible.map((post) => (
             <motion.div
@@ -56,55 +55,42 @@ export default function Blog({ data }) {
             >
               <Link 
                 to={`/blogs/${post._id}`}
-                className="block bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/[0.06] backdrop-blur-xl rounded-2xl overflow-hidden group hover:border-purple-400 dark:hover:border-purple-500/20 transition-all duration-300 h-full"
+                className="block bg-gray-50/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 rounded-2xl overflow-hidden group hover:border-purple-500/30 dark:hover:border-purple-500/20 transition-all duration-300"
               >
-                {/* Thumbnail */}
-                {post.image ? (
-                  <div className="h-44 overflow-hidden relative">
-                    <img
-                      src={getOptimizedImageUrl(post.image)}
-                      alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                  </div>
-                ) : (
-                  <div className="h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/5 dark:to-pink-500/5 flex items-center justify-center">
-                    <span className="text-4xl opacity-30">📝</span>
-                  </div>
-                )}
+                <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-[10px] font-medium text-gray-400 dark:text-white/30 uppercase tracking-wider">
+                        {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </span>
+                      <span className="text-gray-200 dark:text-white/10 text-[10px]">•</span>
+                      <span className="flex items-center gap-1.5 text-[10px] font-medium text-gray-400 dark:text-white/30 uppercase tracking-wider">
+                        <Eye size={12} className="text-purple-500" />
+                        {formatViews(post.views)} Views
+                      </span>
+                    </div>
 
-                <div className="p-5">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-500 dark:text-white/40 text-sm line-clamp-2 mt-2">
-                    {post.description || post.content?.replace(/<[^>]*>/g, '').slice(0, 120)}
-                  </p>
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-500 dark:text-white/40 text-sm mt-3 line-clamp-1 md:line-clamp-2 max-w-2xl">
+                      {post.description || post.content?.replace(/<[^>]*>/g, '').slice(0, 150)}
+                    </p>
 
-                  {/* Footer: tags + views */}
-                  <div className="flex items-center justify-between mt-4">
-                    {post.tags?.length > 0 ? (
-                      <div className="flex flex-wrap gap-1.5">
+                    {post.tags?.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-4">
                         {post.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-0.5 text-[10px] bg-purple-100 dark:bg-purple-500/10 text-purple-600 dark:text-purple-300/70 rounded-full"
-                          >
+                          <span key={tag} className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-purple-100 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded">
                             #{tag}
                           </span>
                         ))}
                       </div>
-                    ) : <div />}
+                    )}
+                  </div>
 
-                    <div className="flex items-center gap-3 text-xs text-gray-400 dark:text-white/25 shrink-0">
-                      {post.createdAt && (
-                        <span>{new Date(post.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                      )}
-                      <span className="flex items-center gap-1">
-                        <Eye size={13} />
-                        {formatViews(post.views)}
-                      </span>
+                  <div className="flex items-center shrink-0 md:border-l border-gray-100 dark:border-white/5 pt-4 md:pt-0 md:pl-8">
+                    <div className="w-12 h-12 rounded-full bg-purple-50 dark:bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:bg-purple-600 group-hover:text-white transition-all shadow-sm shadow-purple-500/10">
+                      <ArrowUpRight size={22} />
                     </div>
                   </div>
                 </div>

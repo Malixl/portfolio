@@ -11,7 +11,7 @@ import ImageUpload from '@/components/admin/ImageUpload'
 const CATEGORIES = [
   { value: 'Multi Platform App', label: 'Multi Platform App' },
   { value: 'Mobile App', label: 'Mobile App' },
-  { value: 'Web App', label: 'Web App' },
+  { value: 'Web Development', label: 'Web Development' },
   { value: 'Frontend Web', label: 'Frontend Web' },
   { value: 'Backend', label: 'Backend' },
   { value: 'Game', label: 'Game' },
@@ -149,7 +149,8 @@ export default function ProjectForm({ onSubmit, onCancel, initial = null }) {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onForm)} className="p-6 space-y-4 overflow-y-auto">
+        <form onSubmit={handleSubmit(onForm)} className="flex flex-col flex-1 overflow-hidden">
+          <div className="p-6 space-y-4 overflow-y-auto no-scrollbar flex-1">
           {/* Title */}
           <div>
             <label className="admin-label">Title *</label>
@@ -360,8 +361,10 @@ export default function ProjectForm({ onSubmit, onCancel, initial = null }) {
              />
           </div>
 
+          </div>
+
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex justify-end gap-3 p-6 border-t border-gray-100 dark:border-white/10 shrink-0">
             <button
               type="button"
               onClick={onCancel}

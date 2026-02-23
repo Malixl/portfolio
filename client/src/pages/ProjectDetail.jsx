@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ExternalLink, Calendar, Layers } from "lucide-react";
+import { ArrowLeft, ExternalLink, Layers, Briefcase, GraduationCap, CheckCircle2 } from "lucide-react";
 import { usePortfolioData } from "../context/PortfolioContext";
 import { getOptimizedImageUrl } from "../utils/imageUtils";
 import { useState, useEffect } from "react";
@@ -74,22 +74,20 @@ export default function ProjectDetail() {
         </h1>
 
         <div className="flex flex-wrap gap-4 items-center text-sm text-gray-500 dark:text-white/50 mb-6">
-          {project.createdAt && (
-            <div className="flex items-center gap-1.5">
-              <Calendar size={15} className="text-purple-500" />
-              <span>
-                {new Date(project.createdAt).toLocaleDateString("en-US", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </span>
-            </div>
-          )}
           {project.category && (
             <div className="flex items-center gap-1.5">
               <Layers size={15} className="text-purple-500" />
               <span>{project.category}</span>
+            </div>
+          )}
+          {project.relatedTo && (
+            <div className="flex items-center gap-1.5 bg-gray-100 dark:bg-white/5 px-3 py-1 rounded-full border border-gray-200/50 dark:border-white/5">
+              {project.relatedTo.includes('Career') ? (
+                <Briefcase size={14} className="text-purple-500" />
+              ) : project.relatedTo.includes('Education') ? (
+                <GraduationCap size={14} className="text-purple-500" />
+              ) : null}
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{project.relatedTo}</span>
             </div>
           )}
         </div>
@@ -141,16 +139,54 @@ export default function ProjectDetail() {
         {/* Divider */}
         <div className="h-px bg-gray-100 dark:bg-white/5 mb-10" />
 
-        {/* About Project */}
-        <div className="prose dark:prose-invert max-w-none prose-lg prose-purple prose-headings:font-bold">
-          <h2 className="text-2xl font-bold mb-4">About Project</h2>
-          <div dangerouslySetInnerHTML={{ __html: project.description }} />
-        </div>
+        {/* 1. My Role & Responsibilities — Personal Impact */}
+        {(project.hardSkills?.length > 0 || project.softSkills?.length > 0) && (
+          <div className="mt-12 p-6 md:p-8 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200/50 dark:border-white/5 mb-12">
+            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+              <CheckCircle2 size={22} className="text-purple-500" />
+              My Role & Responsibilities
+            </h2>
+            
+            <div className="space-y-6">
+              {project.hardSkills?.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">Technical & Operational</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {project.hardSkills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1.5 rounded-lg bg-white dark:bg-white/5 text-gray-700 dark:text-gray-300 text-sm font-medium border border-gray-200 dark:border-white/5"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-        {/* Tech Stack — below About Project */}
+              {project.softSkills?.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">Execution & Leadership</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {project.softSkills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1.5 rounded-lg bg-white dark:bg-white/5 text-gray-700 dark:text-gray-300 text-sm font-medium border border-gray-200 dark:border-white/5"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* 2. Tech Stack — Tools Used */}
         {project.techStack?.length > 0 && (
-          <div className="mt-10">
-            <h2 className="text-xl font-bold mb-4">Technologies I Used</h2>
+          <div className="mt-10 mb-12">
+            <h2 className="text-xl font-bold mb-4">Tech/Tools Used</h2>
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((tech) => (
                 <span
@@ -163,6 +199,12 @@ export default function ProjectDetail() {
             </div>
           </div>
         )}
+
+        {/* 3. About the Project — Context & Deep Dive */}
+        <div className="prose dark:prose-invert max-w-none prose-lg prose-purple prose-headings:font-bold mb-12 pt-10 border-t border-gray-100 dark:border-white/5">
+          <h2 className="text-2xl font-bold mb-4">About the Project</h2>
+          <div dangerouslySetInnerHTML={{ __html: project.description }} />
+        </div>
 
         {/* Extended Content */}
         {project.content && (

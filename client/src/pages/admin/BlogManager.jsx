@@ -42,7 +42,8 @@ function BlogForm({ onSubmit, onCancel, initial = null }) {
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">{isEdit ? 'Edit Post' : 'New Blog Post'}</h2>
           <button onClick={onCancel} className="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 flex items-center justify-center"><X size={16} className="text-gray-500 dark:text-white/50" /></button>
         </div>
-        <form onSubmit={handleSubmit(onForm)} className="p-6 space-y-4 overflow-y-auto">
+        <form onSubmit={handleSubmit(onForm)} className="flex flex-col flex-1 overflow-hidden">
+          <div className="p-6 space-y-4 overflow-y-auto flex-1 no-scrollbar">
           {/* ... (keep fields up to image) ... */}
           {/* Title */}
           <div>
@@ -92,7 +93,9 @@ function BlogForm({ onSubmit, onCancel, initial = null }) {
           </div>
 
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-2">
+          </div>
+
+          <div className="flex justify-end gap-3 p-6 border-t border-gray-100 dark:border-white/10 shrink-0">
             <button type="button" onClick={onCancel} className="px-4 py-2.5 rounded-lg text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-white/50 dark:hover:text-white/80 dark:hover:bg-white/5 transition-all">Cancel</button>
             <button type="submit" disabled={submitting} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-500 disabled:bg-purple-600/50 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors">
               {submitting ? <><Loader2 size={14} className="animate-spin" /> Saving...</> : isEdit ? 'Save Changes' : 'Publish Post'}
@@ -129,13 +132,13 @@ export default function BlogManager() {
 
   return (
     <div className="p-4 md:p-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Blog Posts</h1>
           <p className="text-gray-500 dark:text-white/40 text-sm mt-1">{items.length} post{items.length !== 1 ? 's' : ''}</p>
         </div>
-        <button onClick={openCreate} className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-colors w-full md:w-auto">
-          <Plus size={16} /> New Post
+        <button onClick={openCreate} className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-purple-500/10 w-full sm:w-auto">
+          <Plus size={18} /> New Post
         </button>
       </div>
 
@@ -147,7 +150,7 @@ export default function BlogManager() {
           <p className="text-gray-500 dark:text-white/30 text-lg">No blog posts yet</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {items.map((blog) => (
             <div key={blog._id} className="bg-white dark:bg-[#111] border border-gray-200 dark:border-white/5 rounded-xl overflow-hidden group hover:border-purple-500/30 dark:hover:border-white/10 hover:shadow-lg hover:shadow-gray-200/50 dark:hover:shadow-none transition-all">
               {blog.image && (

@@ -24,10 +24,25 @@ const SKILL_TYPES = [
 ];
 
 const TECH_CATEGORIES = [
-  { value: "Website Development", label: "Web Development" },
-  { value: "Video Editing", label: "Video Editing" },
+  { value: "Frontend Development", label: "Frontend Development" },
+  { value: "Backend Development", label: "Backend Development" },
+  { value: "Fullstack Development", label: "Fullstack Development" },
+  { value: "Mobile Development", label: "Mobile Development" },
+  { value: "Game Development", label: "Game Development" },
   { value: "Database", label: "Database" },
-  { value: "Graphic & UI Design", label: "Graphic & UI Design" },
+  { value: "Cloud & DevOps", label: "Cloud & DevOps" },
+  { value: "AI & Machine Learning", label: "AI & Machine Learning" },
+  { value: "UI/UX Design", label: "UI/UX Design" },
+  { value: "Graphic Design", label: "Graphic Design" },
+  { value: "Video Editing", label: "Video Editing" },
+  { value: "Motion Graphics", label: "Motion Graphics" },
+  { value: "Tools & Utilities", label: "Tools & Utilities" },
+  { value: "Others", label: "Others" },
+];
+
+const VISIBILITY_OPTIONS = [
+  { value: "public", label: "Public (Show on About Page)" },
+  { value: "private", label: "Private (Project Details Only)" },
 ];
 
 const PROFICIENCY_LEVELS = [
@@ -78,8 +93,9 @@ function SkillForm({
           level: initial.level || "Intermediate",
           description: initial.description || "",
           year: initial.year || "",
+          visibility: initial.visibility || "public",
         }
-      : { type: defaultType, level: "Intermediate" },
+      : { type: defaultType, level: "Intermediate", visibility: "public" },
   });
 
   const currentType = watch("type");
@@ -121,7 +137,7 @@ function SkillForm({
         onClick={onCancel}
       />
       <motion.div
-        className="relative w-[90vw] max-w-md bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl dark:shadow-none"
+        className="relative w-[90vw] max-w-md bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl dark:shadow-none max-h-[90vh] flex flex-col overflow-hidden"
         initial={{ y: 30, scale: 0.95 }}
         animate={{ y: 0, scale: 1 }}
         exit={{ y: 20, scale: 0.97 }}
@@ -137,7 +153,8 @@ function SkillForm({
             <X size={16} className="text-gray-500 dark:text-white/50" />
           </button>
         </div>
-        <form onSubmit={handleSubmit(onForm)} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit(onForm)} className="flex flex-col flex-1 overflow-hidden">
+          <div className="flex-1 overflow-y-auto p-6 space-y-4 no-scrollbar">
           {/* Type selector */}
           <div>
             <label className="admin-label">Type</label>
@@ -273,7 +290,30 @@ function SkillForm({
             </>
           )}
 
-          <div className="flex justify-end gap-3 pt-2">
+          {/* Visibility - for all types or specifically tech? User said tech stack, but good for all */}
+          <div>
+            <label className="admin-label">Visibility</label>
+            <Controller
+              name="visibility"
+              control={control}
+              defaultValue="public"
+              render={({ field }) => (
+                <CustomSelect
+                  options={VISIBILITY_OPTIONS}
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder="Select visibility..."
+                />
+              )}
+            />
+            <p className="text-gray-400 dark:text-white/20 text-xs mt-1">
+              Private skills are hidden from the "About" page but visible in project details.
+            </p>
+          </div>
+
+          </div>
+
+          <div className="flex justify-end gap-3 p-6 border-t border-gray-100 dark:border-white/10 shrink-0">
             <button
               type="button"
               onClick={onCancel}
@@ -338,20 +378,20 @@ export default function SkillManager() {
 
   return (
     <div className="p-4 md:p-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
             Skills
           </h1>
           <p className="text-gray-500 dark:text-white/40 text-sm mt-1">
-            {skills.length} skill{skills.length !== 1 ? "s" : ""} total
+            Total {skills.length} expertises in your arsenal
           </p>
         </div>
         <button
           onClick={openCreate}
-          className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-colors w-full md:w-auto"
+          className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-purple-500/20 active:scale-95 w-full sm:w-auto"
         >
-          <Plus size={16} /> Add Skill
+          <Plus size={18} /> <span>Add Skill</span>
         </button>
       </div>
 
@@ -400,7 +440,7 @@ export default function SkillManager() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           {filtered.map((skill) => (
             <div
               key={skill._id}
@@ -416,13 +456,27 @@ export default function SkillManager() {
                       {skill.name}
                     </p>
                     {skill.type === "tech" ? (
-                      <span className="text-[10px] px-1.5 py-0.5 bg-purple-50 text-purple-600 dark:bg-purple-500/15 dark:text-purple-300 rounded-full">
-                        {skill.category || "General"}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] px-1.5 py-0.5 bg-purple-50 text-purple-600 dark:bg-purple-500/15 dark:text-purple-300 rounded-full">
+                          {skill.category || "General"}
+                        </span>
+                        {skill.visibility === "private" && (
+                          <span className="text-[9px] px-1.5 py-0.5 bg-gray-100 text-gray-500 dark:bg-white/5 dark:text-white/30 rounded-full uppercase font-bold tracking-wider">
+                            Private
+                          </span>
+                        )}
+                      </div>
                     ) : (
-                      <span className="text-[10px] text-gray-400 dark:text-white/30">
-                        {skill.year ? `Since ${skill.year}` : ""}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] text-gray-400 dark:text-white/30">
+                          {skill.year ? `Since ${skill.year}` : ""}
+                        </span>
+                        {skill.visibility === "private" && (
+                          <span className="text-[9px] px-1.5 py-0.5 bg-gray-100 text-gray-500 dark:bg-white/5 dark:text-white/30 rounded-full uppercase font-bold tracking-wider">
+                            Private
+                          </span>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>

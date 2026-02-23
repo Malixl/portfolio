@@ -192,11 +192,13 @@ function SkillCardGroup({ type, skills }) {
 export default function Skills({ data }) {
   if (!data?.length) return null
 
+  const publicData = data.filter((s) => s.visibility !== "private");
+
   const byType = {
-    tech: data.filter((s) => (s.type || 'tech') === 'tech'),
-    hardskill: data.filter((s) => s.type === 'hardskill'),
-    softskill: data.filter((s) => s.type === 'softskill'),
-  }
+    tech: publicData.filter((s) => (s.type || "tech") === "tech"),
+    hardskill: publicData.filter((s) => s.type === "hardskill"),
+    softskill: publicData.filter((s) => s.type === "softskill"),
+  };
 
   return (
     <Section id="skills">
