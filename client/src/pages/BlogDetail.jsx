@@ -6,7 +6,6 @@ import { getOptimizedImageUrl } from "../utils/imageUtils";
 import { useState, useEffect, useRef } from "react";
 import ImageModal from "../components/ui/ImageModal";
 import LoadingScreen from "../components/ui/LoadingScreen";
-import SEO from "../components/SEO";
 
 import api from "../services/api";
 
@@ -58,13 +57,6 @@ export default function BlogDetail() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white pb-24">
-      <SEO
-        title={post.title}
-        description={post.description}
-        image={getOptimizedImageUrl(post.image)}
-        keywords={post.tags?.join(", ")}
-        type="article"
-      />
 
       {/* Hero Image — full bleed */}
       {post.image && (

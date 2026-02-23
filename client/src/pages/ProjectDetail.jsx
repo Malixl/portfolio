@@ -6,7 +6,6 @@ import { getOptimizedImageUrl } from "../utils/imageUtils";
 import { useState, useEffect } from "react";
 import ImageModal from "../components/ui/ImageModal";
 import LoadingScreen from "../components/ui/LoadingScreen";
-import SEO from "../components/SEO";
 
 export default function ProjectDetail() {
   const { id } = useParams();
@@ -32,13 +31,6 @@ export default function ProjectDetail() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white pb-24 pt-24 px-4 md:px-8">
-      <SEO
-        title={project.title}
-        description={project.description || `Project: ${project.title}`}
-        image={project.image}
-        url={`/projects/${project._id}`}
-        type="article"
-      />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

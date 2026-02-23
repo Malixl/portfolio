@@ -34,6 +34,8 @@ const TECH_CATEGORIES = [
   { value: "AI & Machine Learning", label: "AI & Machine Learning" },
   { value: "UI/UX Design", label: "UI/UX Design" },
   { value: "Graphic Design", label: "Graphic Design" },
+  { value: "Graphic & UI Design", label: "Graphic & UI Design" },
+  { value: "Website Development", label: "Website Development" },
   { value: "Video Editing", label: "Video Editing" },
   { value: "Motion Graphics", label: "Motion Graphics" },
   { value: "Tools & Utilities", label: "Tools & Utilities" },

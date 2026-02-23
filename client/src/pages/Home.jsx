@@ -1,6 +1,5 @@
 import { usePortfolioData } from "../context/PortfolioContext";
 import Hero from "../components/home/Hero";
-import SEO from "../components/SEO";
 import LoadingScreen from "../components/ui/LoadingScreen";
 
 export default function Home() {
@@ -10,14 +9,6 @@ export default function Home() {
 
   return (
     <>
-      <SEO
-        title="Home"
-        description={
-          profile?.bio ||
-          "Portfolio of Malik, a passionate Full Stack Developer."
-        }
-        keywords="Full Stack Developer, Malik, Portfolio, Web Development"
-      />
       {/* Landing Hero */}
       <Hero profile={profile} />
 
