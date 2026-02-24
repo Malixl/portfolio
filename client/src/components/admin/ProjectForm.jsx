@@ -45,7 +45,9 @@ export default function ProjectForm({ onSubmit, onCancel, initial = null }) {
           description: initial.description || '',
           content: initial.content || '',
           image: initial.image || '',
-          category: initial.category || '',
+          category: Array.isArray(initial.category) 
+            ? initial.category 
+            : (initial.category ? [initial.category] : []),
           relatedTo: initial.relatedTo || '',
           techStack: initial.techStack || [],
           hardSkills: initial.hardSkills || [],
@@ -59,6 +61,7 @@ export default function ProjectForm({ onSubmit, onCancel, initial = null }) {
               ],
         }
       : {
+          category: [],
           techStack: [],
           hardSkills: [],
           softSkills: [],
@@ -207,13 +210,12 @@ export default function ProjectForm({ onSubmit, onCancel, initial = null }) {
               <Controller
                 name="category"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
-                  <CustomSelect
+                  <SearchableMultiSelect
                     options={CATEGORIES}
                     value={field.value}
                     onChange={field.onChange}
-                    placeholder="Select category..."
+                    placeholder="Select categories..."
                   />
                 )}
               />

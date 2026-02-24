@@ -16,7 +16,7 @@ const ProjectSchema = new mongoose.Schema(
             type: String,
         },
         category: {
-            type: String,
+            type: [String],
         },
         techStack: {
             type: [String],

@@ -66,10 +66,10 @@ export default function ProjectDetail() {
         </h1>
 
         <div className="flex flex-wrap gap-4 items-center text-sm text-gray-500 dark:text-white/50 mb-6">
-          {project.category && (
+          {project.category && project.category.length > 0 && (
             <div className="flex items-center gap-1.5">
               <Layers size={15} className="text-purple-500" />
-              <span>{project.category}</span>
+              <span>{Array.isArray(project.category) ? project.category.join(' / ') : project.category}</span>
             </div>
           )}
           {project.relatedTo && (
