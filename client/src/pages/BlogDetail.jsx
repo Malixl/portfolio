@@ -5,7 +5,6 @@ import { usePortfolioData } from "../context/PortfolioContext";
 import { getOptimizedImageUrl } from "../utils/imageUtils";
 import { useState, useEffect, useRef } from "react";
 import ImageModal from "../components/ui/ImageModal";
-import LoadingScreen from "../components/ui/LoadingScreen";
 
 import api from "../services/api";
 
@@ -49,9 +48,7 @@ export default function BlogDetail() {
     loadData();
   }, [id, blogs, navigate]);
 
-  if (loading || !post) {
-    return <LoadingScreen />;
-  }
+  if (loading || !post) return null;
 
   const readTime = Math.ceil((post.content?.length || 0) / 1000) || 5;
 

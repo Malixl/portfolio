@@ -6,6 +6,7 @@ import { Section, SectionTitle } from './Section'
 import { staggerContainer, scaleIn } from '../../utils/animations'
 import { getOptimizedImageUrl } from '../../utils/imageUtils'
 import SearchBar from '../ui/SearchBar'
+import FilterDropdown from '../ui/FilterDropdown'
 
 const INITIAL_COUNT = 4
 
@@ -18,18 +19,48 @@ function stripHtml(html) {
 
 export default function Projects({ data }) {
   const [search, setSearch] = useState('')
+  const [category, setCategory] = useState('')
   const [showAll, setShowAll] = useState(false)
+
+  // Extract unique categories from all projects
+  const categories = useMemo(() => {
+    if (!data?.length) return []
+    const cats = new Set()
+    data.forEach(p => {
+      if (Array.isArray(p.category)) {
+        p.category.forEach(c => c && cats.add(c))
+      } else if (p.category) {
+        cats.add(p.category)
+      }
+    })
+    return [...cats].sort()
+  }, [data])
 
   const filtered = useMemo(() => {
     if (!data?.length) return []
-    if (!search.trim()) return data
-    const q = search.toLowerCase()
-    return data.filter(p => p.title?.toLowerCase().includes(q))
-  }, [data, search])
+    let result = data
 
-  // When searching, show all results. Otherwise limit to INITIAL_COUNT
-  const visible = search ? filtered : (showAll ? filtered : filtered.slice(0, INITIAL_COUNT))
-  const hasMore = !search && filtered.length > INITIAL_COUNT
+    // Filter by category
+    if (category) {
+      result = result.filter(p => {
+        if (Array.isArray(p.category)) return p.category.includes(category)
+        return p.category === category
+      })
+    }
+
+    // Filter by search
+    if (search.trim()) {
+      const q = search.toLowerCase()
+      result = result.filter(p => p.title?.toLowerCase().includes(q))
+    }
+
+    return result
+  }, [data, search, category])
+
+  // When searching or filtering, show all results. Otherwise limit to INITIAL_COUNT
+  const isFiltering = search || category
+  const visible = isFiltering ? filtered : (showAll ? filtered : filtered.slice(0, INITIAL_COUNT))
+  const hasMore = !isFiltering && filtered.length > INITIAL_COUNT
 
   if (!data?.length) return null
 
@@ -37,13 +68,50 @@ export default function Projects({ data }) {
     <Section id="projects">
       <SectionTitle sub="What I've built">Projects</SectionTitle>
 
-      <SearchBar
-        value={search}
-        onChange={setSearch}
-        placeholder="Search projects by title..."
-        resultCount={filtered.length}
-        totalCount={data.length}
-      />
+      {/* Search + Filter Row */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-8">
+        <div className="flex-1">
+          <SearchBar
+            value={search}
+            onChange={setSearch}
+            placeholder="Search projects by title..."
+            resultCount={isFiltering ? filtered.length : undefined}
+            totalCount={data.length}
+            noMargin
+          />
+        </div>
+        <FilterDropdown
+          value={category}
+          onChange={(val) => { setCategory(val); setShowAll(false) }}
+          options={categories}
+          label="Category"
+        />
+      </div>
+
+      {/* Active Filter Chip */}
+      <AnimatePresence>
+        {(search || category) && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="flex flex-wrap items-center gap-2 mb-6"
+          >
+            <span className="text-xs text-gray-400 dark:text-white/30">
+              Showing {filtered.length} of {data.length} projects
+            </span>
+            {category && (
+              <button
+                onClick={() => setCategory('')}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 text-xs font-medium hover:bg-purple-100 dark:hover:bg-purple-500/20 transition-colors"
+              >
+                {category}
+                <span className="text-purple-400 dark:text-purple-300">×</span>
+              </button>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <motion.div variants={staggerContainer} className="grid md:grid-cols-2 gap-6">
         <AnimatePresence mode="popLayout">
@@ -99,9 +167,13 @@ export default function Projects({ data }) {
       </motion.div>
 
       {/* No results */}
-      {search && filtered.length === 0 && (
+      {isFiltering && filtered.length === 0 && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-16">
-          <p className="text-gray-400 dark:text-white/30 text-lg">No projects match "<span className="text-purple-500">{search}</span>"</p>
+          <p className="text-gray-400 dark:text-white/30 text-lg">
+            No projects found
+            {search && <> matching "<span className="text-purple-500">{search}</span>"</>}
+            {category && <> in <span className="text-purple-500">{category}</span></>}
+          </p>
         </motion.div>
       )}
 

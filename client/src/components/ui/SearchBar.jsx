@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion'
  * @param {number} resultCount - Number of filtered results to display
  * @param {number} totalCount - Total number of items
  */
-export default function SearchBar({ value, onChange, placeholder = 'Search...', resultCount, totalCount }) {
+export default function SearchBar({ value, onChange, placeholder = 'Search...', resultCount, totalCount, noMargin = false }) {
   const [focused, setFocused] = useState(false)
   const inputRef = useRef(null)
 
@@ -23,7 +23,7 @@ export default function SearchBar({ value, onChange, placeholder = 'Search...', 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
-      className="mb-8"
+      className={noMargin ? '' : 'mb-8'}
     >
       <div 
         className={`

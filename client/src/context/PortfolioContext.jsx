@@ -13,7 +13,7 @@ export function PortfolioProvider({ children }) {
     blogs: [],
     certificates: [],
     achievements: [],
-    loading: true,
+    loading: false,
   })
 
   useEffect(() => {

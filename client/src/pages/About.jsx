@@ -4,14 +4,11 @@ import AboutSection from "../components/home/About";
 import Skills from "../components/home/Skills";
 import Education from "../components/home/Education";
 import Blog from "../components/home/Blog";
-import LoadingScreen from "../components/ui/LoadingScreen";
 
 import { User } from "lucide-react";
 
 export default function About() {
-  const { profile, skills, education, blogs, loading } = usePortfolioData();
-
-  if (loading) return <LoadingScreen />;
+  const { profile, skills, education, blogs } = usePortfolioData();
 
   return (
     <>

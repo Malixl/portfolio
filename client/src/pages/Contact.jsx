@@ -1,14 +1,11 @@
 import { usePortfolioData } from "../context/PortfolioContext";
 import PageHero from "../components/layout/PageHero";
 import ContactSection from "../components/home/Contact";
-import LoadingScreen from "../components/ui/LoadingScreen";
 
 import { Mail } from "lucide-react";
 
 export default function Contact() {
-  const { profile, loading } = usePortfolioData();
-
-  if (loading) return <LoadingScreen />;
+  const { profile } = usePortfolioData();
 
   return (
     <>

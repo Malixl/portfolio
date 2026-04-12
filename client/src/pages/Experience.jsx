@@ -3,15 +3,12 @@ import PageHero from "../components/layout/PageHero";
 import ExperienceSection from "../components/home/Experience";
 import Projects from "../components/home/Projects";
 import Certificates from "../components/home/Certificates";
-import LoadingScreen from "../components/ui/LoadingScreen";
 
 import { Briefcase } from "lucide-react";
 
 export default function Experience() {
-  const { profile, experience, projects, achievements, loading } =
+  const { experience, projects, achievements } =
     usePortfolioData();
-
-  if (loading) return <LoadingScreen />;
 
   return (
     <>

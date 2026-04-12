@@ -68,11 +68,7 @@ export default function Hero({ profile }) {
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-pink-200/50 dark:bg-pink-600/10 rounded-full blur-3xl" />
 
       <div className="relative z-10 text-center px-6 max-w-3xl">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
+        <div>
           {/* Status badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-sm text-gray-500 dark:text-white/60 mb-8">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
@@ -178,7 +174,7 @@ export default function Hero({ profile }) {
               )}
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

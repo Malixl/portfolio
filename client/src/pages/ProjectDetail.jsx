@@ -5,7 +5,6 @@ import { usePortfolioData } from "../context/PortfolioContext";
 import { getOptimizedImageUrl } from "../utils/imageUtils";
 import { useState, useEffect } from "react";
 import ImageModal from "../components/ui/ImageModal";
-import LoadingScreen from "../components/ui/LoadingScreen";
 
 export default function ProjectDetail() {
   const { id } = useParams();
@@ -25,9 +24,7 @@ export default function ProjectDetail() {
     }
   }, [id, projects, navigate]);
 
-  if (loading || !project) {
-    return <LoadingScreen />;
-  }
+  if (loading || !project) return null;
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white pb-24 pt-24 px-4 md:px-8">
