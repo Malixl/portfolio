@@ -72,7 +72,7 @@ export default function Hero({ profile }) {
           {/* Status badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-sm text-gray-500 dark:text-white/60 mb-8">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            {profile?.status || "Available for work"}
+            Portfolio
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white leading-tight tracking-tight mb-4">
