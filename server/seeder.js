@@ -81,15 +81,17 @@ const importData = async () => {
         console.log('🧹 Old data cleared...');
 
         // Create admin user with hashed password
+        const adminUser = process.env.ADMIN_USER || 'malikganteng';
+        const adminPass = process.env.ADMIN_PASS || 'M@likS!21';
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash('M@likS!21', salt);
+        const hashedPassword = await bcrypt.hash(adminPass, salt);
 
-        const adminUser = await User.create({
-            username: 'malikganteng',
+        await User.create({
+            username: adminUser,
             password: hashedPassword,
         });
 
-        console.log(`👤 Admin created (username: malikganteng, password: M@likS!21)`);
+        console.log(`👤 Admin created (username: ${adminUser}, password: ${adminPass})`);
 
         // Create sample content
         await Project.create(sampleProject);

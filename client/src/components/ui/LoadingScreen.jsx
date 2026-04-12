@@ -47,13 +47,13 @@ export default function LoadingScreen() {
         </motion.div>
         {/* Center icon */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <motion.span
-            className="text-2xl font-bold bg-gradient-to-br from-purple-500 to-violet-600 bg-clip-text text-transparent"
-            animate={{ opacity: [0.5, 1, 0.5] }}
+          <motion.img
+            src="/Frame 24d.png"
+            alt="Logo"
+            className="w-10 h-10 object-contain drop-shadow-lg"
+            animate={{ opacity: [0.7, 1, 0.7], scale: [0.95, 1.05, 0.95] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            L
-          </motion.span>
+          />
         </div>
       </div>
 

@@ -23,8 +23,8 @@ export default function Experience() {
 
       <div className="space-y-20">
         <ExperienceSection data={experience} />
-        <Projects data={projects} />
         <Certificates data={achievements} />
+        <Projects data={projects} />
       </div>
     </>
   );

@@ -139,7 +139,7 @@ export default function ProjectDetail() {
             <div className="space-y-6">
               {project.hardSkills?.length > 0 && (
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">Technical & Operational</h3>
+                  <h3 className="text-sm font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">Hard Skills</h3>
                   <div className="flex flex-wrap gap-2">
                     {project.hardSkills.map((skill) => (
                       <span
@@ -155,7 +155,7 @@ export default function ProjectDetail() {
 
               {project.softSkills?.length > 0 && (
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">Execution & Leadership</h3>
+                  <h3 className="text-sm font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">Soft Skills</h3>
                   <div className="flex flex-wrap gap-2">
                     {project.softSkills.map((skill) => (
                       <span

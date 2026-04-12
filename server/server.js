@@ -10,6 +10,10 @@ dotenv.config();
 
 const app = express();
 
+const compression = require('compression');
+// Compress all responses to make the API lighter and faster
+app.use(compression());
+
 // ===================== CORS =====================
 // Must be the FIRST middleware so headers are set even on error responses
 const corsOptions = {

@@ -7,26 +7,29 @@ import { PortfolioProvider } from "./context/PortfolioContext";
 import ScrollToTop from "./components/layout/ScrollToTop";
 import PublicLayout from "./components/layout/PublicLayout";
 
-// Pages
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Experience from "./pages/Experience";
-import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import ProjectDetail from "./pages/ProjectDetail";
-import BlogDetail from "./pages/BlogDetail";
+import { Suspense, lazy } from "react";
+import LoadingScreen from "./components/ui/LoadingScreen";
+
+// Pages (Lazy Loaded for better performance)
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Experience = lazy(() => import("./pages/Experience"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Login = lazy(() => import("./pages/Login"));
+const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
+const BlogDetail = lazy(() => import("./pages/BlogDetail"));
 import AdminLayout from "./components/admin/AdminLayout";
 
-// Admin Pages
-import Dashboard from "./pages/admin/Dashboard";
-import ProjectManager from "./pages/admin/ProjectManager";
-import SkillManager from "./pages/admin/SkillManager";
-import ExperienceManager from "./pages/admin/ExperienceManager";
-import EducationManager from "./pages/admin/EducationManager";
-import BlogManager from "./pages/admin/BlogManager";
-import AchievementManager from "./pages/admin/AchievementManager";
-import CertificateManager from "./pages/admin/CertificateManager";
-import ProfileManager from "./pages/admin/ProfileManager";
+// Admin Pages (Lazy Loaded)
+const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
+const ProjectManager = lazy(() => import("./pages/admin/ProjectManager"));
+const SkillManager = lazy(() => import("./pages/admin/SkillManager"));
+const ExperienceManager = lazy(() => import("./pages/admin/ExperienceManager"));
+const EducationManager = lazy(() => import("./pages/admin/EducationManager"));
+const BlogManager = lazy(() => import("./pages/admin/BlogManager"));
+const AchievementManager = lazy(() => import("./pages/admin/AchievementManager"));
+const CertificateManager = lazy(() => import("./pages/admin/CertificateManager"));
+const ProfileManager = lazy(() => import("./pages/admin/ProfileManager"));
 
 // Route Guard
 function ProtectedRoute({ children }) {
@@ -56,40 +59,42 @@ export default function App() {
               }}
             />
 
-            <Routes>
-              {/* Public */}
-              <Route element={<PublicLayout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/experience" element={<Experience />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/projects/:id" element={<ProjectDetail />} />
-                <Route path="/blogs/:id" element={<BlogDetail />} />
-              </Route>
+            <Suspense fallback={<LoadingScreen />}>
+              <Routes>
+                {/* Public */}
+                <Route element={<PublicLayout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/experience" element={<Experience />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/projects/:id" element={<ProjectDetail />} />
+                  <Route path="/blogs/:id" element={<BlogDetail />} />
+                </Route>
 
-              {/* Auth - No Navbar/Footer */}
-              <Route path="/login" element={<Login />} />
+                {/* Auth - No Navbar/Footer */}
+                <Route path="/login" element={<Login />} />
 
-              {/* Admin */}
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute>
-                    <AdminLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<Dashboard />} />
-                <Route path="projects" element={<ProjectManager />} />
-                <Route path="skills" element={<SkillManager />} />
-                <Route path="experience" element={<ExperienceManager />} />
-                <Route path="education" element={<EducationManager />} />
-                <Route path="certificates" element={<CertificateManager />} />
-                <Route path="blogs" element={<BlogManager />} />
-                <Route path="achievements" element={<AchievementManager />} />
-                <Route path="profile" element={<ProfileManager />} />
-              </Route>
-            </Routes>
+                {/* Admin */}
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute>
+                      <AdminLayout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route index element={<Dashboard />} />
+                  <Route path="projects" element={<ProjectManager />} />
+                  <Route path="skills" element={<SkillManager />} />
+                  <Route path="experience" element={<ExperienceManager />} />
+                  <Route path="education" element={<EducationManager />} />
+                  <Route path="certificates" element={<CertificateManager />} />
+                  <Route path="blogs" element={<BlogManager />} />
+                  <Route path="achievements" element={<AchievementManager />} />
+                  <Route path="profile" element={<ProfileManager />} />
+                </Route>
+              </Routes>
+            </Suspense>
           </BrowserRouter>
         </PortfolioProvider>
       </AuthProvider>
