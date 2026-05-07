@@ -4,13 +4,12 @@ import { FiExternalLink } from 'react-icons/fi'
 import { Section, SectionTitle } from './Section'
 import { fadeUp, staggerContainer } from '../../utils/animations'
 import { getOptimizedImageUrl } from '../../utils/imageUtils'
-import { useState } from 'react'
-import ImageModal from '../ui/ImageModal'
+import { useNavigate } from 'react-router-dom'
 
 const card = 'bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/[0.06] backdrop-blur-xl rounded-2xl p-6 hover:border-green-300 dark:hover:border-green-500/20 transition-colors duration-300'
 
 export default function Certificates({ data }) {
-  const [selectedImage, setSelectedImage] = useState(null)
+  const navigate = useNavigate()
 
   if (!data?.length) return null
 
@@ -25,8 +24,8 @@ export default function Certificates({ data }) {
               <div className="shrink-0">
                  {cert.image ? (
                    <div 
-                    className="w-16 h-16 rounded-xl overflow-hidden border border-gray-200 dark:border-white/10 cursor-zoom-in group"
-                    onClick={() => setSelectedImage({ src: getOptimizedImageUrl(cert.image), alt: cert.title })}
+                    className="w-16 h-16 rounded-xl overflow-hidden border border-gray-200 dark:border-white/10 cursor-pointer group"
+                    onClick={() => navigate(`/experience/certificate/${cert._id}`)}
                    >
                      <img 
                        src={getOptimizedImageUrl(cert.image)} 
@@ -35,14 +34,22 @@ export default function Certificates({ data }) {
                      />
                    </div>
                  ) : (
-                   <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-500/10 flex items-center justify-center">
+                   <div 
+                     className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-500/10 flex items-center justify-center cursor-pointer"
+                     onClick={() => navigate(`/experience/certificate/${cert._id}`)}
+                   >
                      <Award size={24} className="text-green-600 dark:text-green-400" />
                    </div>
                  )}
               </div>
 
               <div className="min-w-0 flex-1">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white line-clamp-2">{cert.title}</h3>
+                <h3 
+                  className="text-lg font-bold text-gray-900 dark:text-white line-clamp-2 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                  onClick={() => navigate(`/experience/certificate/${cert._id}`)}
+                >
+                  {cert.title}
+                </h3>
                 <p className="text-green-600 dark:text-green-400/80 text-sm font-medium">{cert.issuer}</p>
                 {cert.date && (
                   <p className="text-gray-400 dark:text-white/30 text-xs mt-1 font-mono">
@@ -69,13 +76,7 @@ export default function Certificates({ data }) {
           </motion.div>
         ))}
       </motion.div>
-
-      <ImageModal 
-         isOpen={!!selectedImage}
-         onClose={() => setSelectedImage(null)}
-         imageSrc={selectedImage?.src}
-         altText={selectedImage?.alt}
-      />
     </Section>
   )
 }
+

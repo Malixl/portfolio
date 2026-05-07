@@ -48,6 +48,7 @@ router.delete('/blogs/:id', protect, blogController.deleteBlog);
 
 // ==================== ACHIEVEMENT ROUTES ====================
 router.get('/achievements', achievementController.getAchievements);
+router.get('/achievements/:id', achievementController.getAchievementById);
 router.post('/achievements', protect, achievementController.createAchievement);
 router.put('/achievements/:id', protect, achievementController.updateAchievement);
 router.delete('/achievements/:id', protect, achievementController.deleteAchievement);
@@ -60,6 +61,7 @@ router.delete('/educations/:id', protect, educationController.deleteEducation);
 
 // ==================== CERTIFICATE ROUTES ====================
 router.get('/certificates', certificateController.getCertificates);
+router.get('/certificates/:id', certificateController.getCertificateById);
 router.post('/certificates', protect, certificateController.createCertificate);
 router.put('/certificates/:id', protect, certificateController.updateCertificate);
 router.delete('/certificates/:id', protect, certificateController.deleteCertificate);

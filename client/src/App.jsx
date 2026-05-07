@@ -18,6 +18,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const Login = lazy(() => import("./pages/Login"));
 const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
 const BlogDetail = lazy(() => import("./pages/BlogDetail"));
+const CertificateDetail = lazy(() => import("./pages/CertificateDetail"));
 import AdminLayout from "./components/admin/AdminLayout";
 
 // Admin Pages (Lazy Loaded)
@@ -70,6 +71,9 @@ export default function App() {
                   <Route path="/projects/:id" element={<ProjectDetail />} />
                   <Route path="/blogs/:id" element={<BlogDetail />} />
                 </Route>
+
+                {/* Certificate Preview — No Navbar/Footer */}
+                <Route path="/experience/certificate/:id" element={<CertificateDetail />} />
 
                 {/* Auth - No Navbar/Footer */}
                 <Route path="/login" element={<Login />} />
