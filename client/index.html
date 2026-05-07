@@ -1,15 +1,31 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="referrer" content="no-referrer" />
   <link rel="icon" type="image/png" href="/Frame 24d.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lix Portfolio</title>
+  <title>Malik Journey</title>
 </head>
 
 <body>
+  <script>
+    // Apply theme immediately to prevent flash of wrong theme
+    (function() {
+      // One-time migration: reset old users to dark default
+      if (!localStorage.getItem('theme_default_v2')) {
+        localStorage.setItem('theme', 'dark');
+        localStorage.setItem('theme_default_v2', '1');
+      }
+      var theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
